@@ -1,0 +1,508 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  font-family: 'Space Grotesk', sans-serif;
+  height: 100%;
+  width: 100%;
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  gap: 20px;
+  padding: 20px;
+  background-color: #1e1e1e;
+}
+
+.editor-section, .review-section {
+  flex: 1;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #2d2d2d;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+
+
+textarea {
+  width: 100%;
+  height: 80vh;
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  border: 1px solid #404040;
+  border-radius: 5px;
+  padding: 15px;
+  font-family: 'JetBrains Mono', monospace;
+  resize: none;
+  outline: none;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Update title styles */
+.section-title {
+  color: #50c878;
+  margin-bottom: 15px;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Righteous', cursive;
+  letter-spacing: 1px;
+}
+
+.magic {
+  display: inline-block;
+  color: #50c878;
+  transition: all 0.25s ease;
+  animation: glow 2s ease-in-out infinite;
+  font-family: 'Righteous', cursive;
+  font-size: 1.9rem;
+}
+
+/* Common button styles */
+.action-button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Review button specific styles */
+.review-button {
+  background: linear-gradient(45deg, #50c878, #3da665);
+  color: #1e1e1e;
+  box-shadow: 0 4px 15px rgba(80, 200, 120, 0.2);
+}
+
+.review-button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(80, 200, 120, 0.4);
+}
+
+/* Clear button specific styles */
+.clear-button {
+  background: linear-gradient(45deg, #ff6b6b, #ee5253);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.2);
+}
+
+.clear-button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}
+
+/* Reset button specific styles */
+.reset-button {
+  background: linear-gradient(45deg, #a8e6cf, #7fd1ae);
+  color: #1e1e1e;
+  box-shadow: 0 4px 15px rgba(168, 230, 207, 0.2);
+}
+
+.reset-button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(168, 230, 207, 0.4);
+}
+
+/* Shared hover effect */
+.action-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+.action-button:hover::before {
+  left: 100%;
+}
+
+/* Active state */
+.action-button:active {
+  transform: translateY(1px);
+}
+
+/* Disabled state */
+.action-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Button wrapper */
+.button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+/* Pulse animation for disabled state */
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(0.98); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.action-button:disabled {
+  animation: pulse 2s infinite;
+}
+
+.loading {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #50c878;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.review-content {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  padding: 15px;
+}
+
+.review-text {
+  margin: 10px 0;
+  white-space: pre-wrap;
+}
+
+.code-block {
+  margin: 15px 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.code-block .editor {
+  min-height: auto !important;
+  border: 1px solid #404040;
+}
+
+/* Style for read-only editor in review */
+.review-section .editor textarea {
+  cursor: default !important;
+}
+
+/* Override background for code blocks in review */
+.review-section .code-block {
+  background-color: #282c34;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Custom Scrollbar Styles */
+textarea::-webkit-scrollbar,
+.review-content::-webkit-scrollbar {
+  width: 12px;
+}
+
+textarea::-webkit-scrollbar-track,
+.review-content::-webkit-scrollbar-track {
+  background: #1e1e1e;
+  border-radius: 6px;
+}
+
+textarea::-webkit-scrollbar-thumb,
+.review-content::-webkit-scrollbar-thumb {
+  background: #4a4a4a;
+  border-radius: 6px;
+  border: 3px solid #1e1e1e;
+}
+
+textarea::-webkit-scrollbar-thumb:hover,
+.review-content::-webkit-scrollbar-thumb:hover {
+  background: #50c878;
+}
+
+/* Add max-height and overflow to review content */
+.review-content {
+  max-height: 80vh;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Animated Title Styles */
+.animated-title {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+  cursor: default;
+}
+
+.sage-icon {
+  font-size: 2rem;
+  animation: float 3s ease-in-out infinite;
+  transition: transform 0.3s ease;
+}
+
+.sage-icon:hover {
+  transform: scale(1.2) rotate(15deg);
+}
+
+.title-text {
+  display: flex;
+}
+
+.magic {
+  display: inline-block;
+  color: #50c878;
+  transition: all 0.25s ease;
+  animation: glow 2s ease-in-out infinite;
+}
+
+.magic:hover {
+  animation: rubberBand 0.8s ease-out;
+  color: #2ecc71;
+}
+
+.sparkles {
+  position: absolute;
+  right: -25px;
+  top: 0;
+  font-size: 1.2rem;
+  animation: sparkle 1.5s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2) rotate(25deg);
+    opacity: 0.8;
+  }
+}
+
+@keyframes rubberBand {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scaleX(1.25) scaleY(0.75);
+  }
+  40% {
+    transform: scaleX(0.75) scaleY(1.25);
+  }
+  60% {
+    transform: scaleX(1.15) scaleY(0.85);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(80, 200, 120, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(80, 200, 120, 0.8),
+                 0 0 30px rgba(80, 200, 120, 0.3);
+  }
+}
+
+/* Add hover effect for the entire title */
+.section-title:hover .sage-icon {
+  animation: float 1.5s ease-in-out infinite;
+}
+
+.section-title:hover .sparkles {
+  animation: sparkle 0.8s ease-in-out infinite;
+}
+
+/* Add new rainbow animation */
+@keyframes rainbow {
+  0% { color: #50c878; } /* Green */
+  25% { color: #66c887; } /* Light green */
+  50% { color: #2ecc71; } /* Emerald */
+  75% { color: #3da665; } /* Forest green */
+  100% { color: #50c878; } /* Back to original */
+}
+
+/* Update magic letter hover styles */
+.magic:hover {
+  animation: rainbow 2s linear infinite, rubberBand 0.8s ease-out;
+  transform: scale(1.2);
+  text-shadow: 0 0 15px rgba(46, 204, 113, 0.4);
+}
+
+/* Add delay for each letter to create wave effect */
+.title-text .magic:nth-child(1) { animation-delay: 0s; }
+.title-text .magic:nth-child(2) { animation-delay: 0.1s; }
+.title-text .magic:nth-child(3) { animation-delay: 0.2s; }
+.title-text .magic:nth-child(4) { animation-delay: 0.3s; }
+.title-text .magic:nth-child(5) { animation-delay: 0.4s; }
+.title-text .magic:nth-child(6) { animation-delay: 0.5s; }
+.title-text .magic:nth-child(7) { animation-delay: 0.6s; }
+.title-text .magic:nth-child(8) { animation-delay: 0.7s; }
+.title-text .magic:nth-child(9) { animation-delay: 0.8s; }
+
+/* Add these styles at the end of your existing CSS */
+
+.editor {
+  counter-reset: line;
+  border: 1px solid #404040;
+  border-radius: 5px;
+  line-height: 1.5;
+}
+
+.editor textarea {
+  outline: 0;
+  border: 0;
+  background: none;
+  color: #d4d4d4;
+}
+
+/* Preserve your existing scrollbar styles */
+.editor::-webkit-scrollbar {
+  width: 12px;
+}
+
+.editor::-webkit-scrollbar-track {
+  background: #1e1e1e;
+  border-radius: 6px;
+}
+
+.editor::-webkit-scrollbar-thumb {
+  background: #4a4a4a;
+  border-radius: 6px;
+  border: 3px solid #1e1e1e;
+}
+
+.editor::-webkit-scrollbar-thumb:hover {
+  background: #50c878;
+}
+
+/* Override Prism.js theme colors if needed */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #608b4e;
+}
+
+.token.punctuation {
+  color: #d4d4d4;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #b5cea8;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #ce9178;
+}
+
+/* Add at the end of your file */
+
+.code-block-container {
+  margin: 15px 0;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid #404040;
+}
+
+.code-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background-color: #363636;
+  border-bottom: 1px solid #404040;
+}
+
+.code-block-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  color: #d4d4d4;
+}
+
+.copy-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border: 1px solid #50c878;
+  border-radius: 4px;
+  background-color: transparent;
+  color: #50c878;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.copy-button:hover {
+  background-color: #50c87820;
+  transform: translateY(-1px);
+}
+
+.copy-button:active {
+  transform: translateY(0);
+}
+
+/* Update existing code block styles */
+.code-block {
+  margin: 0;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.code-block .editor {
+  min-height: auto !important;
+  border: none;
+}
