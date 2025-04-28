@@ -54,14 +54,23 @@ npm run dev
 ## Project Structure
 
 ```
-frontend/
-├── src/
-│   ├── App.jsx          # Main application component
-│   ├── App.css          # Main styles
-│   ├── main.jsx         # Entry point
-│   └── styles/          # Additional styles
-└── public/              # Static assets
-```
+code-reviewer/
+├── frontend/
+│   ├── src/
+│   │   ├── App.jsx          # Main application component
+│   │   ├── App.css          # Main styles
+│   │   ├── main.jsx         # Entry point
+│   │   └── styles/          # Additional styles
+│   ├── public/              # Static assets
+│   └── package.json         # Frontend dependencies
+└── backend/
+    ├── src/
+    │   ├── app.js           # Express application setup
+    │   ├── controllers/     # Request handlers
+    │   ├── routes/          # API routes
+    │   └── services/        # Business logic
+    ├── .env                 # Environment variables
+    └── package.json         # Backend dependencies
 
 ## Environment Variables
 
